@@ -78,7 +78,7 @@ class DDSFile:
         if header_size > DDS_HEADER_SIZE:
             raise NotImplementedError('Unknown DDS header format')
         flags, height, width, _, depth, mipmap_count = struct.unpack('IIIIII', self.read(6 * 4))
-        print(height,width)
+        # print(height,width)
         self.size = (width, height)
         self.flags = DDSFlags(flags)
         self.file.seek(11 * 4, 1)  # skip DWORD dwReserved1[11];

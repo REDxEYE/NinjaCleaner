@@ -1,3 +1,4 @@
+import math
 import os.path, sys
 from PIL import Image
 
@@ -20,10 +21,11 @@ except:
         from pip._internal import main
     except:
         from pip import main
-    print('MISIING flags LIBRARY - INSTALLING IT')
+    print('MISIING py-flags LIBRARY - INSTALLING IT')
     main(['install', 'py-flags'])
     print('PLEASE RESTART SCRIPT')
 
+screens = [1.778,1.333,1.25]
 
 class NinjaCleaner:
 
@@ -49,14 +51,14 @@ class NinjaCleaner:
             im = DDSFile(file)
             im.read_header()
             w, h = im.size
-            if w < h:
-                w, h = h, w
+            # if w < h:
+            #     w, h = h, w
             if w == 0 or h == 0:
                 print('Zero dimension texture, skipping')
                 self.to_remove.append(file)
                 continue
-            print(w%h)
-            if w % h:
+            print(round(w/h,3))
+            if round(w/h,3) in screens:
                 # print('File is probably buffer,', file)
                 self.to_remove.append(file)
             else:
