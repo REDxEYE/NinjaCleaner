@@ -46,7 +46,8 @@ class NinjaCleaner:
 
     def process_files(self):
         for file in self.files:
-            im = DDSFile(file)  # type:Image.Image
+            im = DDSFile(file)
+            im.read_header()
             w, h = im.size
             if w < h:
                 w, h = h, w
@@ -54,6 +55,7 @@ class NinjaCleaner:
                 print('Zero dimension texture, skipping')
                 self.to_remove.append(file)
                 continue
+            print(w%h)
             if w % h:
                 # print('File is probably buffer,', file)
                 self.to_remove.append(file)

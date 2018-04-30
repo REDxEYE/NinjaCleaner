@@ -78,6 +78,7 @@ class DDSFile:
         if header_size > DDS_HEADER_SIZE:
             raise NotImplementedError('Unknown DDS header format')
         flags, height, width, _, depth, mipmap_count = struct.unpack('IIIIII', self.read(6 * 4))
+        print(height,width)
         self.size = (width, height)
         self.flags = DDSFlags(flags)
         self.file.seek(11 * 4, 1)  # skip DWORD dwReserved1[11];
@@ -98,7 +99,7 @@ class DDSFile:
         from PIL import Image
         self.file.seek(self.data_start)
         w, h = self.size
-        if self.no_mipmaps and DDSPixelFlags.DDPF_RGB in self.pixel_flags:
+        if DDSPixelFlags.DDPF_RGB in self.pixel_flags:
             return Image.frombytes('RGBA', self.size, self.read(w * h * self.bytes_per_channel))
         elif DDSPixelFlags.DDPF_FOURCC in self.pixel_flags:
             return Image.open(self.path)
