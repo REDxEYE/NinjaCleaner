@@ -6,16 +6,22 @@ from PIL import Image
 try:
     import PIL
 except:
-    from pip._internal import main
+    try:
+        from pip._internal import main
+    except:
+        from pip import main
     print('MISIING PIL LIBRARY - INSTALLING IT')
     main(['install','PIL'])
     print('PLEASE RESTART SCRIPT')
 try:
     import flags
 except:
-    from pip._internal import main
+    try:
+        from pip._internal import main
+    except:
+        from pip import main
     print('MISIING flags LIBRARY - INSTALLING IT')
-    main(['install','flags'])
+    main(['install','py-flags'])
     print('PLEASE RESTART SCRIPT')
 
 class NinjaCleaner:
