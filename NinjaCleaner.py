@@ -48,6 +48,7 @@ class NinjaCleaner:
 
     def process_files(self):
         for file in self.files:
+            print('Working on',file)
             im = DDSFile(file)
             if im.invalid:
                 print('Invalid file, skipping')

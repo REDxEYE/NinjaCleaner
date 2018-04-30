@@ -74,7 +74,7 @@ class DDSFile:
         self.file.seek(0, 2)
         size = self.file.tell()
         self.file.seek(0)
-        if size <124:
+        if size < 124:
             self.size = (0,0)
             self.invalid = True
         fourcc, header_size = struct.unpack('II', self.read(8))
