@@ -75,13 +75,17 @@ class DDSFile:
         size = self.file.tell()
         self.file.seek(0)
         print(size)
-        if size<124:
-            self.size = (0,0)
+        if size < 124:
+            self.size = (0, 0)
             self.invalid = True
             return
         fourcc, header_size = struct.unpack('II', self.read(8))
-        assert fourcc == DDS_MAGIC_I
+        if fourcc != DDS_MAGIC_I:
+            self.invalid = True
+            return
         if header_size > DDS_HEADER_SIZE:
+            self.invalid = True
+            return
             raise NotImplementedError('Unknown DDS header format')
         flags, height, width, _, depth, mipmap_count = struct.unpack('IIIIII', self.read(6 * 4))
         # print(height,width)
@@ -90,6 +94,8 @@ class DDSFile:
         self.file.seek(11 * 4, 1)  # skip DWORD dwReserved1[11];
         p_size = struct.unpack('I', self.read(4))[0]
         if p_size > DDS_PIXEL_HEADER_SIZE:
+            self.invalid = True
+            return
             raise NotImplementedError('Unknown pixel header format')
         p_flags, p_fourcc, rgb_bits = struct.unpack('III', self.read(4 * 3))
         self.bytes_per_channel = rgb_bits // 8

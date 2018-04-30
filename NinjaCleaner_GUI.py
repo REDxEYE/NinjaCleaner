@@ -70,7 +70,7 @@ class NinjaCleanderGui(Frame):
         self.current_img = value
         dds_file = DDSFile(value)
         if dds_file.invalid:
-            return 
+            return
         dds_file.read_header()
         print('Loaded {} {}'.format(os.path.basename(value), dds_file.size))
         print(dds_file.get_image())
