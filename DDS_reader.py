@@ -74,9 +74,11 @@ class DDSFile:
         self.file.seek(0, 2)
         size = self.file.tell()
         self.file.seek(0)
-        if size < 124:
+        print(size)
+        if size<124:
             self.size = (0,0)
             self.invalid = True
+            return
         fourcc, header_size = struct.unpack('II', self.read(8))
         assert fourcc == DDS_MAGIC_I
         if header_size > DDS_HEADER_SIZE:
