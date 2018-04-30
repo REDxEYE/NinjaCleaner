@@ -1,7 +1,7 @@
 import os.path, sys
 from PIL import Image
 
-
+from DDS_reader import DDSFile
 
 try:
     import PIL
@@ -45,7 +45,7 @@ class NinjaCleaner:
 
     def process_files(self):
         for file in self.files:
-            im = Image.open(file)  # type:Image.Image
+            im = DDSFile(file)  # type:Image.Image
             w, h = im.size
             if w < h:
                 w, h = h, w
