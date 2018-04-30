@@ -9,6 +9,7 @@ from DDS_reader import DDSFile
 from NinjaCleaner import NinjaCleaner
 from tkinter import messagebox
 
+
 class NinjaCleanderGui(Frame):
     def __init__(self, master, **kw):
         super().__init__(master, **kw)
@@ -22,7 +23,7 @@ class NinjaCleanderGui(Frame):
         self.filemenu.add_command(label="Exit", command=root.quit)
         self.menubar.add_cascade(label="File", menu=self.filemenu)
         self.delete_menu = Menu(self.menubar, tearoff=0)
-        self.menubar.add_cascade(label="Delete", menu = self.delete_menu)
+        self.menubar.add_cascade(label="Delete", menu=self.delete_menu)
         self.delete_menu.add_command(label="Delete unnecessary files", command=self.delete)
 
         self.master = master
@@ -30,7 +31,7 @@ class NinjaCleanderGui(Frame):
         master.title("NinjaCleaner gui")
         self.current_img = ''
         list_frame = Frame(self)
-        list_frame.pack(side= LEFT)
+        list_frame.pack(side=LEFT)
         to_keep_frame = Frame(list_frame)
         to_keep_frame.pack()
         Label(to_keep_frame, text='To keep').pack(fill=Y)
@@ -50,14 +51,14 @@ class NinjaCleanderGui(Frame):
         self.img_label._image_cache = self.img
         self.img_label.pack(side=RIGHT)
 
-    def resize(self,img:Image.Image):
-        w,h = img.size
-        if w<h:
-            w,h = h,w
+    def resize(self, img: Image.Image):
+        w, h = img.size
+        if w < h:
+            w, h = h, w
         k = h / w
-        width,height = (int(512 * (k if w<h else 1)), int(512 * (k if h<w else 1)))
+        width, height = (int(512 * (k if w < h else 1)), int(512 * (k if h < w else 1)))
         # print(k,width,height)
-        return img.resize((width,height))
+        return img.resize((width, height))
 
     def on_select(self, evt):
         # Note here that Tkinter passes an event object to onselect()
@@ -71,12 +72,12 @@ class NinjaCleanderGui(Frame):
         dds_file.read_header()
         print('Loaded {} {}'.format(os.path.basename(value), dds_file.size))
         print(dds_file.get_image())
-        self.img.paste(Image.new('RGBA',(512,512)))
+        self.img.paste(Image.new('RGBA', (512, 512)))
         self.img.paste(self.resize(dds_file.get_image()))
         dds_file.file.close()
 
     def delete(self):
-        ans = messagebox.askyesno(title='Are you sure?',message = 'Remove all files from \'to remove\' list?')
+        ans = messagebox.askyesno(title='Are you sure?', message='Remove all files from \'to remove\' list?')
         if not ans:
             return
         for file in self.ninja_cleaner.to_remove:

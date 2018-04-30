@@ -108,7 +108,6 @@ class DDSFile:
             raise NotImplementedError('This format is not currently supported')
 
 
-
 if __name__ == '__main__':
     dds = DDSFile(r'E:\PYTHON_STUFF\NinjaCleaner\test_data\palma_1\2018.04.22_17.56.26_Sniper_x86.exe\Tex_0003_0.dds')
     dds.read_header()
