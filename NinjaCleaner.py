@@ -49,6 +49,9 @@ class NinjaCleaner:
     def process_files(self):
         for file in self.files:
             im = DDSFile(file)
+            if im.invalid:
+                print('Invalid file, skipping')
+                self.to_remove.append(file)
             im.read_header()
             w, h = im.size
             # if w < h:

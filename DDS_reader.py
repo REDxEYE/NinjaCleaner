@@ -68,11 +68,15 @@ class DDSFile:
         self.bytes_per_channel = 0
         self.pixel_fourcc = ''
         self.data_start = 0
+        self.invalid = False
 
     def read_header(self):
         self.file.seek(0, 2)
         size = self.file.tell()
         self.file.seek(0)
+        if size <124:
+            self.size = (0,0)
+            self.invalid = True
         fourcc, header_size = struct.unpack('II', self.read(8))
         assert fourcc == DDS_MAGIC_I
         if header_size > DDS_HEADER_SIZE:
